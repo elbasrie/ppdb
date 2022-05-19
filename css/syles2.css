@@ -1,0 +1,31 @@
+header {
+    grid-area: header;
+    background:#209B2C;
+    color: #571212;
+    padding: 1em;
+    }
+header a {
+    text-decoration:none;
+    color: #FFFFFF;
+    font-size:1em;
+    font-weight:700;
+}
+.nav{
+    grid-area: header;
+    color: #571212;
+    float: right;
+    font-size:0.6em;
+    font-weight:700;
+}
+.masuk{
+    font-family: "Times New Roman";
+    font-size: 15px;
+    background: #E3BA50;
+    color: #404040;
+    border-radius: 5px;
+    padding: 12px 20px;
+    margin-top: -50px;
+}
+.masuk:hover{
+    opacity:0.9;
+}
