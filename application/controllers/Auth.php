@@ -11,7 +11,8 @@ class Auth extends MY_Controller {
     if($this->session->userdata('authenticated')) // Jika user sudah login (Session authenticated ditemukan)
       redirect('admin'); // Redirect ke page home
     // function render_login tersebut dari file core/MY_Controller.php
-    $this->render_login('login'); // Load view login.php
+    $this->load->view("template/header");
+    $this->load->view("login");
   }
 
   public function login(){

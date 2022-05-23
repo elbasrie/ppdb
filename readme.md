@@ -1,6 +1,5 @@
-###################
-Aplikasi Penerimaan Peserta Didik Baru Berbasis Codeigniter 3
-###################
+# Aplikasi Penerimaan Peserta Didik Baru Berbasis Codeigniter 3
+
 
 # Tim
 - (12200733) Hillzawa Danny

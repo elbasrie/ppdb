@@ -1,7 +1,6 @@
 header {
     grid-area: header;
     background:#209B2C;
-    color: #571212;
     padding: 1em;
     }
 header a {
@@ -10,11 +9,18 @@ header a {
     font-size:1em;
     font-weight:700;
 }
+header img {
+    float: left;
+    width: 40px;
+    height: 40px;
+}
+body {
+    margin:0;
+}
 .nav{
     grid-area: header;
-    color: #571212;
     float: right;
-    font-size:0.6em;
+    font-size:0.8em;
     font-weight:700;
 }
 .masuk{
@@ -24,8 +30,56 @@ header a {
     color: #404040;
     border-radius: 5px;
     padding: 12px 20px;
-    margin-top: -50px;
+    margin-top: -70px;
+}
+.pendaftaran{
+    font-family: "Times New Roman";
+    font-size: 15px;
+    background: #209B2C;
+    color: #404040;
+    border-radius: 5px;
+    padding: 12px 20px;
+    margin-top: -70px;
 }
 .masuk:hover{
     opacity:0.9;
+}
+.home_page{
+    margin-left: 100px;
+    margin-top: 130px;
+}
+.image_home{
+    margin-top: 130px;
+    float: right;
+}
+img {
+    border-radius: 20%;
+}
+.column {
+    float: left;
+    width: 33.33%;
+    padding: 5px;
+}
+.row::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+.pendaftaran_button{
+    margin-left: 170px;
+    margin-top: 90px;
+}
+.masuk_button{
+    margin-left: 210px;
+    margin-top: 70px;
+}
+.box_login{
+    width: 320px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    border: 5px solid #D2D6CE;
+    background: #D2D6CE;
+    opacity: 70%;
+    border-radius: 20px;
+    margin: 0;
 }
