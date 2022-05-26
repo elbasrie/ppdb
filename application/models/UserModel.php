@@ -11,4 +11,9 @@ class UserModel extends CI_Model {
     {
         $this->db->insert('user', $data);
     }
+    public function simpanFormulir($data = null)
+    {
+        $this->db->insert('formulir',$data);
+    }
+    
 }

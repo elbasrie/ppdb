@@ -84,7 +84,7 @@ class Auth extends MY_Controller {
                 'nama' => htmlspecialchars($this->input->post('nama', true)),
                 'email' => htmlspecialchars($email),
                 'password' => md5($this->input->post('password1')),
-                'role' => 'admin',
+                'role' => 'visitor',
             ];
 
             $this->UserModel->simpanData($data); //menggunakan model
