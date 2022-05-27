@@ -9,7 +9,7 @@
                     <a href="<?php echo base_url('user'); ?>">Home</a>
                 </div>
                 <div class="point">
-                    <a href="#">Data Form</a>
+                    <a href="<?php echo base_url('user/data_form'); ?>">Data Form</a>
                 </div>
             </div>
         </div>

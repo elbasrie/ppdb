@@ -12,4 +12,20 @@ class Home extends CI_Controller {
         $this->load->view("home");
 	}
 
+	public function kritik()
+	{
+		$this->form_validation->set_rules('kritik', 'kritik', 'required|max_lenght[255]');
+
+        if ($this->form_validation->run() == false){
+            $this->load->view("template/header");
+            $this->load->view("kritik");
+        } else {
+            $data = [
+                'kritik' => $this->input->post('kritik', true),
+            ];
+
+            $this->UserModel->simpanKritik($data);
+            redirect('home/kritik');
+        }
+	}
 }

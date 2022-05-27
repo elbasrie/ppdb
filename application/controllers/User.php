@@ -4,16 +4,20 @@ class User extends CI_Controller {
     public function __construct()
     {
 		parent::__construct();
+        cek_login();
 	}
 
 	public function index()
 	{
+        $data['user'] = $this->UserModel->cekData()->result();
         $this->load->view("template/header");
         $this->load->view("user");
+        
 	}
 
     public function formulir()
     {
+        $data['user'] = $this->UserModel->cekUser()->result();
         $this->form_validation->set_rules('asal_sekolah', 'Asal Sekolah', 'required');
         $this->form_validation->set_rules('nama', 'Nama', 'required');
         $this->form_validation->set_rules('nisn', 'NISN', 'required');
@@ -28,7 +32,8 @@ class User extends CI_Controller {
         $config['upload_path'] = './assets/img/upload';
         $config['allowed_types'] = 'jpg|png|jpeg';
         $config['max_size'] = '3000';
-        $config['file_name'] = 'img' . time();
+        
+        $user_id = $this->session->userdata('id');
 
         $this->load->library('upload', $config);
 
@@ -43,8 +48,28 @@ class User extends CI_Controller {
             } else {
                 $gambar = '';
             }
+            if ($this->upload->do_upload('kk')) {
+                $kk = $this->upload->data();
+                $gambar2 = $kk['file_name'];
+            } else {
+                $gambar2 = '';
+            }
+            if ($this->upload->do_upload('akta')) {
+                $akta = $this->upload->data();
+                $gambar3 = $akta['file_name'];
+            } else {
+                $gambar3 = '';
+            }
+            if ($this->upload->do_upload('ijazah')) {
+                $ijazah = $this->upload->data();
+                $gambar4 = $ijazah['file_name'];
+            } else {
+                $gambar4 = '';
+            }
 
             $data = [
+                'id_user' => $user_id,
+                'tgl_pendaftaran' => $this->input->post('tgl_pendaftaran', true),
                 'asal_sekolah' => $this->input->post('asal_sekolah', true),
                 'nama' => $this->input->post('nama', true),
                 'nisn' => $this->input->post('nisn', true),
@@ -55,12 +80,22 @@ class User extends CI_Controller {
                 'email'=> $this->input->post('email', true),
                 'no_tlp' => $this->input->post('no_tlp', true),
                 'nama_ortu' => $this->input->post('nama_ortu', true),
-                'foto' => $gambar
+                'foto' => $gambar,
+                'kk' => $gambar2,
+                'akta' => $gambar3,
+                'ijazah' => $gambar4,
             ];
 
             $this->UserModel->simpanFormulir($data);
             redirect('user/formulir');
         }
+    }
+
+    public function data_form(){
+        $data['formulir'] = $this->UserModel->cekData()->result();
+        $this->load->view("template/header");
+        $this->load->view("template/sidebar");
+        $this->load->view("data", $data);
     }
 
 }

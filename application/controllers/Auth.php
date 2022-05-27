@@ -9,7 +9,7 @@ class Auth extends MY_Controller {
 
   public function index(){
     if($this->session->userdata('authenticated')) // Jika user sudah login (Session authenticated ditemukan)
-      redirect('admin'); // Redirect ke page home
+      redirect('user'); // Redirect ke page home
     // function render_login tersebut dari file core/MY_Controller.php
     $this->load->view("template/header");
     $this->load->view("login");
@@ -26,12 +26,17 @@ class Auth extends MY_Controller {
       if($password == $user->password){ // Jika password yang diinput sama dengan password yang didatabase
         $session = array(
           'authenticated'=>true, // Buat session authenticated dengan value true
-          'emali'=>$user->email,  // Buat session username
+          'id'=>$user->id, // Buat session id
+          'email'=>$user->email,  // Buat session email
           'nama'=>$user->nama, // Buat session nama
           'role'=>$user->role // Buat session role
         );
         $this->session->set_userdata($session); // Buat session sesuai $session
-        redirect('admin'); // Redirect ke halaman home
+        if ($this->session->userdata('role') == 'visitor') {
+          redirect('user');// Redirect ke halaman user
+        } elseif ($this->session->userdata('role') == 'admin'){
+          redirect('admin');
+        }
       }else{
         $this->session->set_flashdata('message', 'Password salah'); // Buat session flashdata
         redirect('auth'); // Redirect ke halaman login
