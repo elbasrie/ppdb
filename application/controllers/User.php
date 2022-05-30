@@ -9,7 +9,6 @@ class User extends CI_Controller {
 
 	public function index()
 	{
-        $data['user'] = $this->UserModel->cekData()->result();
         $this->load->view("template/header");
         $this->load->view("user");
         
@@ -17,7 +16,6 @@ class User extends CI_Controller {
 
     public function formulir()
     {
-        $data['user'] = $this->UserModel->cekUser()->result();
         $this->form_validation->set_rules('asal_sekolah', 'Asal Sekolah', 'required');
         $this->form_validation->set_rules('nama', 'Nama', 'required');
         $this->form_validation->set_rules('nisn', 'NISN', 'required');
@@ -91,8 +89,8 @@ class User extends CI_Controller {
         }
     }
 
-    public function data_form(){
-        $data['formulir'] = $this->UserModel->cekData()->result();
+    public function data(){
+        $data['formulir'] = $this->UserModel->cekDataBySession()->result();
         $this->load->view("template/header");
         $this->load->view("template/sidebar");
         $this->load->view("data", $data);

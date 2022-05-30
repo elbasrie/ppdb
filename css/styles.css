@@ -5605,6 +5605,13 @@ textarea.form-control-lg {
   padding: 1rem;
 }
 
+.thumbnail-modal{
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+  width: 150px;
+}
+
 .modal-footer {
   display: flex;
   flex-wrap: wrap;

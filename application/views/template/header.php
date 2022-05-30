@@ -10,7 +10,6 @@
                 <div class="nav">
                     <a href="<?php echo base_url(); ?>">Beranda</a>
                     <a href="<?php echo base_url('prosedur'); ?>">Prosedur</a>
-                    <a href="<?php echo base_url('kritik'); ?>">Kritik & Saran</a>
                     <?php
                         if(!empty($this->session->userdata('email'))) { ?>
                         <a href="<?php echo base_url('auth/logout'); ?>"><button class="masuk">Keluar</button></a>

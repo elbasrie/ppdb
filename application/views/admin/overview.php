@@ -22,9 +22,6 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#!">Settings</a></li>
-                        <li><a class="dropdown-item" href="#!">Activity Log</a></li>
-                        <li><hr class="dropdown-divider" /></li>
                         <li><a class="dropdown-item" href="<?php echo base_url().'auth/logout'; ?>">Logout</a></li>
                     </ul>
                 </li>
@@ -40,20 +37,19 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Dashboard
                             </a>
-                            <div class="sb-sidenav-menu-heading">Addons</div>
-                            <a class="nav-link" href="charts.html">
-                                <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                                Charts
+                            <a class="nav-link" href="<?php echo base_url('admin/overview/user'); ?>">
+                                <div class="sb-nav-link-icon"><i class="fas fa-user fa-fw"></i></div>
+                                User
                             </a>
-                            <a class="nav-link" href="tables.html">
-                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                                Tables
+                            <a class="nav-link" href="<?php echo base_url('admin/overview/siswa'); ?>">
+                                <div class="sb-nav-link-icon"><i class="fas fa-user-group fa-fw"></i></div>
+                                Siswa Aktif
                             </a>
                         </div>
                     </div>
                     <div class="sb-sidenav-footer">
                         <div class="small">Logged in as:</div>
-                        Start Bootstrap
+                        <?= $this->session->userdata('nama'); ?>
                     </div>
                 </nav>
             </div>
@@ -67,27 +63,26 @@
                             <div class="col-xl-3 col-md-6">
                                 <div class="card bg-primary text-white mb-4">
                                     <div class="card-body"><h2><?php echo $total_user; ?></h2>User</div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card bg-warning text-white mb-4">
-                                    <div class="card-body"><h2><?php echo $total_formulir; ?></h2>Pendaftar</div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card bg-success text-white mb-4">
-                                    <div class="card-body">Success Card</div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">View Details</a>
+                                        <a class="small text-white stretched-link" href="<?php echo base_url('admin/overview/user'); ?>">View Details</a>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-xl-3 col-md-6">
-                                <div class="card bg-danger text-white mb-4">
-                                    <div class="card-body">Danger Card</div>
+                                <div class="card bg-warning text-white mb-4">
+                                    <div class="card-body"><h2><?php echo $total_formulir; ?></h2>Formulir</div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">View Details</a>
+                                        <a class="small text-white stretched-link" href="#datatablesSimple">View Details</a>
+                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-md-6">
+                                <div class="card bg-success text-white mb-4">
+                                    <div class="card-body"><h2><?php echo $total_siswa; ?></h2>Siswa Aktif</div>
+                                    <div class="card-footer d-flex align-items-center justify-content-between">
+                                        <a class="small text-white stretched-link" href="<?php echo base_url('admin/overview/siswa'); ?>">View Details</a>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                     </div>
                                 </div>
@@ -111,6 +106,7 @@
                                             <th>Alamat</th>
                                             <th>Tempat Tanggal Lahir</th>
                                             <th>No. Telp</th>
+                                            <th>Nama Ortu</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -125,6 +121,7 @@
                                             <th>Alamat</th>
                                             <th>Tempat Tanggal Lahir</th>
                                             <th>No. Telp</th>
+                                            <th>Nama Ortu</th>
                                             <th>Action</th>
                                         </tr>
                                     </tfoot>
@@ -143,34 +140,67 @@
                                             <td><?php echo $f->alamat ?></td>
                                             <td><?php echo $f->tempat_lahir ?>, <?php echo $f->tanggal_lahir ?></td>
                                             <td><?php echo $f->no_tlp ?></td>
+                                            <td><?php echo $f->nama_ortu ?></td>
+                                            <td>
+                                                <div class="dropdown">
+                                                <button class="btn btn-secondary dropdown-toggle" id="dropdownFadeIn" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                                                    <div class="dropdown-menu animated--fade-in" aria-labelledby="dropdownFadeIn">
+                                                        <a class="dropdown-item" type="button" data-bs-toggle="modal" data-bs-target="#detailModal">Detail</a>
+                                                        <a class="dropdown-item" href="<?= base_url('admin/overview/ubahData/').$f->id_formulir;?>" method="post">Edit</a>
+                                                        <a class="dropdown-item" href="<?= base_url('admin/overview/approve/').$f->id_formulir;?>">Aktivasi</a>
+                                                        <a class="dropdown-item" href="<?= base_url('admin/overview/hapusSiswa/').$f->id_formulir;?>">Hapus</a>
+                                                    </div>
+                                                </div>
+                                            </td>
                                         </tr>
-                                    <?php } ?>
+                                        <?php } ?>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
                 </main>
-                <footer class="py-4 bg-light mt-auto">
-                    <div class="container-fluid px-4">
-                        <div class="d-flex align-items-center justify-content-between small">
-                            <div class="text-muted">Copyright &copy; Your Website 2022</div>
-                            <div>
-                                <a href="#">Privacy Policy</a>
-                                &middot;
-                                <a href="#">Terms &amp; Conditions</a>
+                <!-- Modal -->
+                <?php foreach($formulir as $f){?>
+                <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="detailModalLabel">Detail</h5>
+                                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <table>
+                                    <tr>
+                                        <td>Foto</td>
+                                        <td><img src="<?php echo base_url('assets/img/upload/') . $f->foto; ?>"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Akta</td>
+                                        <td><img src="<?php echo base_url('assets/img/upload/') . $f->akta; ?>"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Kartu Keluarga</td>
+                                        <td><img src="<?php echo base_url('assets/img/upload/') . $f->kk; ?>"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Ijazah</td>
+                                        <td><img src="<?php echo base_url('assets/img/upload/') . $f->ijazah; ?>"></td>
+                                    </tr>
+                                </table>
+                                <?php } ?>
                             </div>
                         </div>
                     </div>
-                </footer>
+                </div>
             </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <script src="js/scripts.js"></script>
+        <script src="<?= base_url('js/scripts.js') ?>"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-        <script src="assets/demo/chart-area-demo.js"></script>
-        <script src="assets/demo/chart-bar-demo.js"></script>
+        <script src="<?= base_url('assets/demo/chart-area-demo.js') ?>"></script>
+        <script src="<?= base_url('assets/demo/chart-bar-demo.js') ?>"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
-        <script src="js/datatables-simple-demo.js"></script>
+        <script src="<?= base_url('js/datatables-simple-demo.js') ?>"></script>
     </body>
 </html>
