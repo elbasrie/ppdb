@@ -171,9 +171,9 @@ class Overview extends CI_Controller {
         }
 
         $where = array('id' => $id);
-
+        $data['siswa'] = $this->UserModel->edit_data($where,'siswa')->result();
+        
         $data = [
-            'id' => $this->input->post('id'),
             'asal_sekolah' => $this->input->post('asal_sekolah', true),
             'nama' => $this->input->post('nama', true),
             'nisn' => $this->input->post('nisn', true),

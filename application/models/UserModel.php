@@ -85,7 +85,8 @@ class UserModel extends CI_Model {
         return $this->db->get_where($table,$where);
     }
     function update_data($where,$data,$table){
-		$this->db->update($table,$data,$where);
+		$this->db->where($where);
+		$this->db->update($table,$data);
 	}	
     function edit_dataById(){	
         $this->db->where('id_user', $this->session->userdata ('id'));	
