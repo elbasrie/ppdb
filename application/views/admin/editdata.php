@@ -5,7 +5,7 @@
         </div>
     <div class="card-body">
     <?php foreach($formulir as $f){ ?>
-    <form method="post" action="<?php echo base_url('admin/overview/update_siswa'); ?>" enctype="multipart/form-data">
+    <form method="post" action="<?php echo base_url('admin/overview/update_form'); ?>" enctype="multipart/form-data">
         <input type="hidden" name="id" value="<?php echo $f->id; ?>">
         <div class="mb-3">
             <label>Asal Sekolah</label>

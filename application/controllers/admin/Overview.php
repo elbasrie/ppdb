@@ -126,6 +126,65 @@ class Overview extends CI_Controller {
 		$this->load->view('admin/footer');
     }
 
+    public function update_form()
+    {
+        $config['upload_path'] = './assets/img/upload';
+        $config['allowed_types'] = 'jpg|png|jpeg';
+        $config['max_size'] = '3000';
+        
+
+        $this->load->library('upload', $config);
+
+        if ($this->upload->do_upload('foto')) {
+            $foto = $this->upload->data();
+            $gambar = $foto['file_name'];
+        } else {
+            $gambar = '';
+        }
+        if ($this->upload->do_upload('kk')) {
+            $kk = $this->upload->data();
+            $gambar2 = $kk['file_name'];
+        } else {
+            $gambar2 = '';
+        }
+        if ($this->upload->do_upload('akta')) {
+            $akta = $this->upload->data();
+            $gambar3 = $akta['file_name'];
+        } else {
+            $gambar3 = '';
+        }
+        if ($this->upload->do_upload('ijazah')) {
+            $ijazah = $this->upload->data();
+            $gambar4 = $ijazah['file_name'];
+        } else {
+            $gambar4 = '';
+        }
+
+        $where = array('id' => $id);
+        $data['formulir'] = $this->UserModel->edit_data($where,'formulir')->result();
+        
+        $data = [
+            'asal_sekolah' => $this->input->post('asal_sekolah', true),
+            'nama' => $this->input->post('nama', true),
+            'nisn' => $this->input->post('nisn', true),
+            'tempat_lahir' => $this->input->post('tempat_lahir', true),
+            'tanggal_lahir' => $this->input->post('tanggal_lahir', true),
+            'jenis_kelamin' => $this->input->post('jenis_kelamin', true),
+            'alamat' => $this->input->post('alamat', true),
+            'no_tlp' => $this->input->post('no_tlp', true),
+            'email' => $this->input->post('email', true),
+            'nama_ortu' => $this->input->post('nama_ortu', true),
+            'foto' => $gambar,
+            'kk' => $gambar2,
+            'akta' => $gambar3,
+            'ijazah' => $gambar4,
+        ];
+
+
+        $this->UserModel->update_data($where,$data,'formulir');
+        redirect('admin');
+    }
+
     public function edit_siswa($id)
     {
         $where = array('id' => $id);
