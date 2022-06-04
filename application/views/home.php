@@ -6,7 +6,7 @@
             <a>MA XYZ bertujuan untuk mendidikan generasi pemimpin masa depan yang mengedepankan akhlakul karimah, berjiwa bersih dan suci yang selalu bisa menyebarkan syiar Islam melalui proses pendidikannya.</a>
         </div>
         <div class="pendaftaran_button">
-            <a href="<?php echo base_url('prosedur'); ?>"><button class="pendaftaran">Prosedur Pendaftaran</button></a>
+            <a href="<?php echo base_url('home/prosedur'); ?>"><button class="pendaftaran">Prosedur Pendaftaran</button></a>
         </div>
         <div class="masuk_button">
             <a href="<?php echo base_url('auth'); ?>"><button class="masuk_home">Masuk</button></a>

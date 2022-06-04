@@ -12,4 +12,9 @@ class Home extends CI_Controller {
         $this->load->view("home");
 	}
 
+	public function prosedur()
+	{
+        $this->load->view("template/header");
+        $this->load->view("prosedur");
+	}
 }

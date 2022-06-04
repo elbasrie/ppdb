@@ -1,46 +1,71 @@
-
-    <form method="post" action="<?php echo base_url('admin/overview/ubahData'); ?>" enctype="multipart/form-data">
-                <a>Asal Sekolah</a>
-                <input  type="text" name="asal_sekolah">
-                <a>Nama Calon Siswa</a>
-                <input  type="text" name="nama">
-                    <a>NISN</a>
-                    
-                    <input  type="text" name="nisn">
-                <a>Tempat Lahir</a>
-                <input  type="text" name="tempat_lahir">
-                    <a>Tanggal Lahir</a>
-                    <input  type="date" name="tanggal_lahir">
-                <a>Jenis Kelamin</a>
-                <select  name="jenis_kelamin">
-                    <option value="Laki-Laki">Laki-Laki</option>
-                    <option value="Perempuan">Perempuan</option>
-                </select>
-                <a>Alamat</a>
-                <input  type="text" name="alamat">
-                <a>Email</a>
-                <input  type="text" name="email">
-                    <a>No. Telp</a>
-                    
-                    <input  type="text" name="no_tlp">
-                <a>Nama Orang Tua/Wali</a>
-                <input  type="text" name="nama_ortu">
-                <a>Foto Diri</a>
-                <input  type="file" name="foto" accept="image/png, image/jpeg, image/jpg, image/gif">
-                
-                <div class="half-right">
-                    <a>Kartu Keluarga</a>
-                    
-                    <input  type="file" name="kk" accept="image/png, image/jpeg, image/jpg, image/gif">
-                </div>
-                
-                <a>Akta Kelahiran</a>
-                
-                <input  type="file" name="akta" accept="image/png, image/jpeg, image/jpg, image/gif">
-                
-                <div class="half-right">
-                    <a>Ijazah/Surat Keterangan Lulus</a>
-                    <input  type="file" name="ijazah" accept="image/png, image/jpeg, image/jpg, image/gif">
-                </div>
-                <button class="submit-button" type="submit">Submit</button>
-        </form>
+<div class="container-sm px-5">
+    <div class="card mb-4">
+        <div class="card-header">
+            <h3>Edit Data</h3>
+        </div>
+    <div class="card-body">
+    <?php foreach($formulir as $f){ ?>
+    <form method="post" action="<?php echo base_url('admin/overview/update_siswa'); ?>" enctype="multipart/form-data">
+        <input type="hidden" name="id" value="<?php echo $f->id; ?>">
+        <div class="mb-3">
+            <label>Asal Sekolah</label>
+            <input class="form-control" type="text" name="asal_sekolah" value="<?php echo $f->asal_sekolah; ?>">
+        </div>
+        <div class="mb-3">
+            <label>Nama Calon Siswa</label>
+            <input class="form-control" type="text" name="nama" value="<?php echo $f->nama; ?>">
+        </div>
+        <div class="mb-3">
+            <label>NISN</label>
+            <input class="form-control" type="text" name="nisn" value="<?php echo $f->nisn; ?>">
+        </div>
+        <div class="mb-3">
+            <label>Tempat Lahir</label>
+            <input class="form-control" type="text" name="tempat_lahir" value="<?php echo $f->tempat_lahir; ?>">
+        </div>
+        <div class="mb-3">
+            <label>Tanggal Lahir</label>
+            <input class="form-control" type="date" name="tanggal_lahir" value="<?php echo $f->tanggal_lahir; ?>">
+        </div>
+        <div class="mb-3">
+            <label>Jenis Kelamin</label>
+            <select class="form-control" name="jenis_kelamin">
+                <option value="Laki-Laki">Laki-Laki</option>
+                <option value="Perempuan">Perempuan</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label>Alamat</label>
+            <input class="form-control" type="text" name="alamat" value="<?php echo $f->alamat; ?>">
+        </div>
+        <div class="mb-3">
+            <label>No. Telp</label>
+            <input class="form-control" type="text" name="no_tlp" value="<?php echo $f->no_tlp; ?>">
+        </div>
+        <div class="mb-3">
+            <label>Nama Orang Tua/Wali</label>
+            <input class="form-control" type="text" name="nama_ortu" value="<?php echo $f->nama_ortu; ?>">
+        </div>
+        <div class="mb-3">
+            <label>Foto Diri</label>
+            <input class="form-control" type="file" name="foto" accept="image/png, image/jpeg, image/jpg, image/gif">
+        </div>
+        <div class="mb-3">
+            <label>Kartu Keluarga</label>
+            <input class="form-control" type="file" name="kk" accept="image/png, image/jpeg, image/jpg, image/gif">
+        </div>
+        <div class="mb-3">
+            <label>Akta Kelahiran</label>
+            <input class="form-control" type="file" name="akta" accept="image/png, image/jpeg, image/jpg, image/gif">
+        </div>
+        <div class="mb-3">
+            <label>Ijazah/Surat Keterangan Lulus</label>
+            <input class="form-control" type="file" name="ijazah" accept="image/png, image/jpeg, image/jpg, image/gif">
+        </div>
+        <div class="mb-3">
+            <button class="btn btn-primary mb-3" type="submit">Submit</button>
+    </form>
+    <?php } ?>
+    </div>
+    </div>
+    </div>

@@ -5,6 +5,8 @@
         </ol>
         <div class="card mb-4">
             <div class="card-body">
+            <a href="<?= base_url('admin/overview/print_siswa'); ?>" target="_blank" class="btn btn-primary mb-3"><i class="fas fa-print"></i> Print</a>
+            <a href="<?= base_url('admin/overview/tambahSiswa'); ?>" class="btn btn-success mb-3"><i class="fas fa-add"></i> Tambah Data</a>
                 <table id="datatablesSimple">
                     <thead>
                         <tr>
@@ -57,7 +59,7 @@
                                 <button class="btn btn-secondary dropdown-toggle" id="dropdownFadeIn" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
                                     <div class="dropdown-menu animated--fade-in" aria-labelledby="dropdownFadeIn">
                                         <a class="dropdown-item" type="button" data-bs-toggle="modal" data-bs-target="#detailModal">Detail</a>
-                                        <a class="dropdown-item" href="<?= base_url('admin/overview/ubahData/').$s->id;?>" method="post">Edit</a>
+                                        <a class="dropdown-item" href="<?= base_url('admin/overview/edit_siswa/').$s->id;?>" method="post">Edit</a>
                                         <a class="dropdown-item" href="<?= base_url('admin/overview/hapusSiswa/').$s->id;?>">Hapus</a>
                                     </div>
                                 </div>

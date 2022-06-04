@@ -33,7 +33,7 @@ class Overview extends CI_Controller {
 
 	public function hapus($id)
     {
-		$where = array('id_formulir' => $id);
+		$where = array('id' => $id);
 		$this->UserModel->hapusData($where,'formulir');
         redirect('admin');
     }
@@ -45,33 +45,29 @@ class Overview extends CI_Controller {
         redirect('admin/overview/siswa');
     }
 
-	public function ubahData()
-	{
-		if($this->session->userdata('role') != 'admin') // Jika user yg login bukan admin
-		  show_404();
-		$data['userActive'] = $this->session->userdata('nama');
-		$this->form_validation->set_rules('asal_sekolah', 'Asal Sekolah', 'required');
+    public function tambahSiswa()
+    {
+        $this->form_validation->set_rules('asal_sekolah', 'Asal Sekolah', 'required');
         $this->form_validation->set_rules('nama', 'Nama', 'required');
         $this->form_validation->set_rules('nisn', 'NISN', 'required');
         $this->form_validation->set_rules('tempat_lahir', 'Tempat Lahir', 'required');
         $this->form_validation->set_rules('tanggal_lahir', 'Tanggal Lahir', 'required');
         $this->form_validation->set_rules('jenis_kelamin', 'Jenis Kelamin', 'required');
         $this->form_validation->set_rules('alamat', 'Alamat', 'required');
-        $this->form_validation->set_rules('email', 'Email', 'required');
         $this->form_validation->set_rules('no_tlp', 'No Telp', 'required');
         $this->form_validation->set_rules('nama_ortu', 'Nama Orangtua', 'required');
 
         $config['upload_path'] = './assets/img/upload';
         $config['allowed_types'] = 'jpg|png|jpeg';
         $config['max_size'] = '3000';
+        
 
         $this->load->library('upload', $config);
 
         if ($this->form_validation->run()  == false){
-            $this->load->view('admin/header');
-			$this->load->view('admin/sidebar');
-			$this->load->view('admin/editdata');
-			$this->load->view('admin/footer');
+            $this->load->view("admin/header");
+            $this->load->view("admin/sidebar");
+            $this->load->view("admin/add");
         } else {
             if ($this->upload->do_upload('foto')) {
                 $foto = $this->upload->data();
@@ -107,7 +103,6 @@ class Overview extends CI_Controller {
                 'tanggal_lahir' => $this->input->post('tanggal_lahir', true),
                 'jenis_kelamin' => $this->input->post('jenis_kelamin', true),
                 'alamat' => $this->input->post('alamat', true),
-                'email'=> $this->input->post('email', true),
                 'no_tlp' => $this->input->post('no_tlp', true),
                 'nama_ortu' => $this->input->post('nama_ortu', true),
                 'foto' => $gambar,
@@ -116,17 +111,95 @@ class Overview extends CI_Controller {
                 'ijazah' => $gambar4,
             ];
 
-            $this->UserModel->updateFormulir($data, ['id_formulir' => $this->input->post('no_formulir')]);
-            redirect('admin');
+            $this->UserModel->simpanSiswa($data);
+            redirect('admin/overview/siswa');
         }
-	}
+    }
+
+    public function edit_form($id)
+    {
+        $where = array('id' => $id);
+        $data['formulir'] = $this->UserModel->edit_data($where,'formulir')->result();
+        $this->load->view('admin/header');
+		$this->load->view('admin/sidebar');
+		$this->load->view('admin/editdata', $data);
+		$this->load->view('admin/footer');
+    }
+
+    public function edit_siswa($id)
+    {
+        $where = array('id' => $id);
+        $data['siswa'] = $this->UserModel->edit_data($where,'siswa')->result();
+        $this->load->view('admin/header');
+		$this->load->view('admin/sidebar');
+		$this->load->view('admin/editsiswa', $data);
+		$this->load->view('admin/footer');
+    }
+
+    public function update_siswa()
+    {
+        $config['upload_path'] = './assets/img/upload';
+        $config['allowed_types'] = 'jpg|png|jpeg';
+        $config['max_size'] = '3000';
+        
+
+        $this->load->library('upload', $config);
+
+        if ($this->upload->do_upload('foto')) {
+            $foto = $this->upload->data();
+            $gambar = $foto['file_name'];
+        } else {
+            $gambar = '';
+        }
+        if ($this->upload->do_upload('kk')) {
+            $kk = $this->upload->data();
+            $gambar2 = $kk['file_name'];
+        } else {
+            $gambar2 = '';
+        }
+        if ($this->upload->do_upload('akta')) {
+            $akta = $this->upload->data();
+            $gambar3 = $akta['file_name'];
+        } else {
+            $gambar3 = '';
+        }
+        if ($this->upload->do_upload('ijazah')) {
+            $ijazah = $this->upload->data();
+            $gambar4 = $ijazah['file_name'];
+        } else {
+            $gambar4 = '';
+        }
+
+        $where = array('id' => $id);
+
+        $data = [
+            'id' => $this->input->post('id'),
+            'asal_sekolah' => $this->input->post('asal_sekolah', true),
+            'nama' => $this->input->post('nama', true),
+            'nisn' => $this->input->post('nisn', true),
+            'tempat_lahir' => $this->input->post('tempat_lahir', true),
+            'tanggal_lahir' => $this->input->post('tanggal_lahir', true),
+            'jenis_kelamin' => $this->input->post('jenis_kelamin', true),
+            'alamat' => $this->input->post('alamat', true),
+            'no_tlp' => $this->input->post('no_tlp', true),
+            'nama_ortu' => $this->input->post('nama_ortu', true),
+            'foto' => $gambar,
+            'kk' => $gambar2,
+            'akta' => $gambar3,
+            'ijazah' => $gambar4,
+        ];
+
+
+        $this->UserModel->update_data($where,$data,'siswa');
+        redirect('admin/overview/siswa');
+    }
 
     public function approve($id)
     {
         $formulir=$this->UserModel->selectFormulir();
         foreach($formulir as $f){
             $data=[
-                'id'=>$f->id_formulir,
+                'id'=>$f->id,
                 'tgl_pendaftaran'=>$f->tgl_pendaftaran,
                 'asal_sekolah'=>$f->asal_sekolah,
                 'nama'=>$f->nama,
@@ -144,7 +217,7 @@ class Overview extends CI_Controller {
             ];
         }
         $this->UserModel->insertTableSiswa($data);
-        $where = array('id_formulir' => $id);
+        $where = array('id' => $id);
 		$this->UserModel->hapusData($where,'formulir');
         redirect('admin');
     }
@@ -157,6 +230,26 @@ class Overview extends CI_Controller {
 		$this->load->view('admin/sidebar');
 		$this->load->view('admin/siswa', $data);
 		$this->load->view('admin/footer');
+    }
+
+    public function print_formulir()
+    {
+        $data['formulir'] = $this->UserModel->cekData()->result();
+
+        $this->load->view('admin/print_formulir', $data);
+    }
+
+    public function print_siswa()
+    {
+        $data['siswa'] = $this->UserModel->cekSiswa()->result();
+
+        $this->load->view('admin/print_siswa', $data);
+    }
+    public function print_user()
+    {
+        $data['user'] = $this->UserModel->cekUser()->result();
+
+        $this->load->view('admin/print_user', $data);
     }
 
 }

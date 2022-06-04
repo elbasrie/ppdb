@@ -5,6 +5,7 @@
         </ol>
         <div class="card mb-4">
             <div class="card-body">
+            <a href="<?= base_url('admin/overview/print_user'); ?>" target="_blank" class="btn btn-primary mb-3"><i class="fas fa-print"></i> Print</a>
                 <table id="datatablesSimple">
                     <thead>
                         <tr>

@@ -14,7 +14,7 @@
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
-            <a class="navbar-brand ps-3" href="<?php echo base_url().'admin'; ?>">Dashboar Admin</a>
+            <a class="navbar-brand ps-3" href="<?php echo base_url().'admin'; ?>">Dashboard Admin</a>
             <!-- Sidebar Toggle-->
             <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
             <!-- Navbar-->
@@ -94,6 +94,7 @@
                                 Data Pendaftar
                             </div>
                             <div class="card-body">
+                            <a href="<?= base_url('admin/overview/print_formulir'); ?>" target="_blank" class="btn btn-primary mb-3"><i class="fas fa-print"></i> Print</a>
                                 <table id="datatablesSimple">
                                     <thead>
                                         <tr>
@@ -146,9 +147,9 @@
                                                 <button class="btn btn-secondary dropdown-toggle" id="dropdownFadeIn" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
                                                     <div class="dropdown-menu animated--fade-in" aria-labelledby="dropdownFadeIn">
                                                         <a class="dropdown-item" type="button" data-bs-toggle="modal" data-bs-target="#detailModal">Detail</a>
-                                                        <a class="dropdown-item" href="<?= base_url('admin/overview/ubahData/').$f->id_formulir;?>" method="post">Edit</a>
-                                                        <a class="dropdown-item" href="<?= base_url('admin/overview/approve/').$f->id_formulir;?>">Aktivasi</a>
-                                                        <a class="dropdown-item" href="<?= base_url('admin/overview/hapusSiswa/').$f->id_formulir;?>">Hapus</a>
+                                                        <a class="dropdown-item" href="<?= base_url('admin/overview/edit_form/').$f->id;?>">Edit</a>
+                                                        <a class="dropdown-item" href="<?= base_url('admin/overview/approve/').$f->id;?>">Aktivasi</a>
+                                                        <a class="dropdown-item" href="<?= base_url('admin/overview/hapus/').$f->id;?>">Hapus</a>
                                                     </div>
                                                 </div>
                                             </td>

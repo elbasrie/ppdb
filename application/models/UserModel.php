@@ -67,14 +67,34 @@ class UserModel extends CI_Model {
     {
         $this->db->insert('formulir',$data);
     }
+    public function simpanSiswa($data = null)
+    {
+        $this->db->insert('siswa',$data);
+    }
     public function hapusData($where, $table)
     {
         $this->db->where($where);
         $this->db->delete($table);
     }
-    public function updateFormulir($data = null, $where = null)
+    public function hapusDataById()
     {
-        $this->db->update('formulir', $data, $where);
+        $this->db->where('id_user', $this->session->userdata ('id'));
+        $this->db->delete('formulir');
+    }	
+    function edit_data($where,$table){		
+        return $this->db->get_where($table,$where);
+    }
+    function update_data($where,$data,$table){
+		$this->db->update($table,$data,$where);
+	}	
+    function edit_dataById(){	
+        $this->db->where('id_user', $this->session->userdata ('id'));	
+        return $this->db->get('formulir');
+    }
+    public function update_dataById($data)
+    {
+        $this->db->where('id_user', $this->session->userdata ('id'));
+		$this->db->update('formulir',$data);
     }
     public function selectFormulir()
     {
