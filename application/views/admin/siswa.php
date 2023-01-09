@@ -60,7 +60,7 @@
                                     <div class="dropdown-menu animated--fade-in" aria-labelledby="dropdownFadeIn">
                                         <a class="dropdown-item" type="button" data-bs-toggle="modal" data-bs-target="#detailModal">Detail</a>
                                         <a class="dropdown-item" href="<?= base_url('admin/overview/edit_siswa/').$s->id;?>" method="post">Edit</a>
-                                        <a class="dropdown-item" href="<?= base_url('admin/overview/hapusSiswa/').$s->id;?>">Hapus</a>
+                                        <a class="dropdown-item" href="<?= base_url('admin/overview/hapusSiswa/').$s->id;?>" onclick="return confirm('Yakin dek?');">Hapus</a>
                                     </div>
                                 </div>
                             </td>

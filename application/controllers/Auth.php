@@ -8,38 +8,37 @@ class Auth extends MY_Controller {
   }
 
   public function index(){
-    if($this->session->userdata('authenticated')) // Jika user sudah login (Session authenticated ditemukan)
-      redirect('user'); // Redirect ke page home
-    // function render_login tersebut dari file core/MY_Controller.php
+    if($this->session->userdata('authenticated')) 
+      redirect('user');
     $this->load->view("template/header");
     $this->load->view("login");
   }
 
   public function login(){
-    $email = $this->input->post('email'); // Ambil isi dari inputan email pada form login
-    $password = md5($this->input->post('password')); // Ambil isi dari inputan password pada form login dan encrypt dengan md5
-    $user = $this->UserModel->get($email); // Panggil fungsi get yang ada di UserModel.php
-    if(empty($user)){ // Jika hasilnya kosong / user tidak ditemukan
-      $this->session->set_flashdata('message', 'Username tidak ditemukan'); // Buat session flashdata
-      redirect('auth'); // Redirect ke halaman login
+    $email = $this->input->post('email'); 
+    $password = md5($this->input->post('password')); 
+    $user = $this->UserModel->get($email);
+    if(empty($user)){ 
+      $this->session->set_flashdata('message', 'Username tidak ditemukan'); 
+      redirect('auth');
     }else{
-      if($password == $user->password){ // Jika password yang diinput sama dengan password yang didatabase
+      if($password == $user->password){ 
         $session = array(
-          'authenticated'=>true, // Buat session authenticated dengan value true
-          'id'=>$user->id, // Buat session id
-          'email'=>$user->email,  // Buat session email
-          'nama'=>$user->nama, // Buat session nama
-          'role'=>$user->role // Buat session role
+          'authenticated'=>true,
+          'id'=>$user->id, 
+          'email'=>$user->email, 
+          'nama'=>$user->nama, 
+          'role'=>$user->role 
         );
-        $this->session->set_userdata($session); // Buat session sesuai $session
+        $this->session->set_userdata($session);
         if ($this->session->userdata('role') == 'visitor') {
-          redirect('user');// Redirect ke halaman user
+          redirect('user');
         } elseif ($this->session->userdata('role') == 'admin'){
           redirect('admin');
         }
       }else{
-        $this->session->set_flashdata('message', 'Password salah'); // Buat session flashdata
-        redirect('auth'); // Redirect ke halaman login
+        $this->session->set_flashdata('message', 'Password salah');
+        redirect('auth');
       }
     }
   }
@@ -50,34 +49,19 @@ class Auth extends MY_Controller {
         if ($this->session->userdata('email')) {
             redirect('user');
         }
-        //membuat rule untuk inputan nama agar tidak boleh kosong dengan membuat pesan error dengan 
-        //bahasa sendiri yaitu 'Nama Belum diisi'
         $this->form_validation->set_rules('nama', 'Nama Lengkap', 'required', [
             'required' => 'Nama Belum diis!!'
         ]);
-        //membuat rule untuk inputan email agar tidak boleh kosong, tidak ada spasi, format email harus valid
-        //dan email belum pernah dipakai sama user lain dengan membuat pesan error dengan bahasa sendiri 
-        //yaitu jika format email tidak benar maka pesannya 'Email Tidak Benar!!'. jika email belum diisi,
-        //maka pesannya adalah 'Email Belum diisi', dan jika email yang diinput sudah dipakai user lain,
-        //maka pesannya 'Email Sudah dipakai'
         $this->form_validation->set_rules('email', 'Alamat Email', 'required|trim|valid_email|is_unique[user.email]', [
             'valid_email' => 'Email Tidak Benar!!',
             'required' => 'Email Belum diisi!!',
             'is_unique' => 'Email Sudah Terdaftar!'
         ]);
-        //membuat rule untuk inputan password agar tidak boleh kosong, tidak ada spasi, tidak boleh kurang dari
-        //dari 3 digit, dan password harus sama dengan repeat password dengan membuat pesan error dengan  
-        //bahasa sendiri yaitu jika password dan repeat password tidak diinput sama, maka pesannya
-        //'Password Tidak Sama'. jika password diisi kurang dari 3 digit, maka pesannya adalah 
-        //'Password Terlalu Pendek'.
         $this->form_validation->set_rules('password1', 'Password', 'required|trim|min_length[3]|matches[password2]', [
             'matches' => 'Password Tidak Sama!!',
             'min_length' => 'Password Terlalu Pendek'
         ]);
         $this->form_validation->set_rules('password2', 'Repeat Password', 'required|trim|matches[password1]');
-        //jika jida disubmit kemudian validasi form diatas tidak berjalan, maka akan tetap berada di
-        //tampilan registrasi. tapi jika disubmit kemudian validasi form diatas berjalan, maka data yang 
-        //diinput akan disimpan ke dalam tabel user
         if ($this->form_validation->run() == false) {
             $data['judul'] = 'Registrasi Member';
 
@@ -92,7 +76,7 @@ class Auth extends MY_Controller {
                 'role' => 'visitor',
             ];
 
-            $this->UserModel->simpanData($data); //menggunakan model
+            $this->UserModel->simpanData($data); 
 
             redirect('auth');
         }
